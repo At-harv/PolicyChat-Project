@@ -1,30 +1,42 @@
-import {
-  Car,
-  Building2,
-  Shield,
-  DollarSign,
-  Calendar,
-  Eye,
-  SquarePen,
-} from "lucide-react";
+import React from "react";
+import { Trash2, Eye } from "lucide-react";
+import { Car, Building2, Shield, DollarSign, Calendar } from "lucide-react";
 
-export default function PolicyCard({
+const PolicyCard = ({
+  policyId,
   title,
   provider,
   status = "active",
   policyNumber,
   type,
   coverage,
-  premium,
-  expiry,
+  premium, // Format: "₹1000/Monthly"
+  expiry, // Format: "Expires 1/1/2026"
   onView,
-  onEdit,
-}) {
+  onDelete,
+}) => {
   const statusColors = {
     active: "bg-green-100 text-green-800 border-green-200",
     inactive: "bg-yellow-100 text-yellow-800 border-yellow-200",
     expired: "bg-red-100 text-red-800 border-red-200",
   };
+
+  // Helper to determine icon based on policy type (simplified)
+  const getIcon = (type) => {
+    switch (type.toLowerCase()) {
+      case "auto insurance":
+        return <Car className="w-6 h-6 text-white" />;
+      case "home insurance":
+        return <Building2 className="w-6 h-6 text-white" />;
+      default:
+        return <Shield className="w-6 h-6 text-white" />;
+    }
+  };
+
+  // Split premium into amount and frequency for display
+  const [premiumAmount, premiumFrequency] = premium
+    ? premium.split("/")
+    : ["N/A", ""];
 
   return (
     <div className="rounded-lg border text-card-foreground shadow-sm hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm">
@@ -33,7 +45,7 @@ export default function PolicyCard({
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-              <Car className="w-6 h-6 text-white" />
+              {getIcon(type)}
             </div>
             <div className="min-w-0">
               <h3 className="font-semibold text-slate-900 truncate">{title}</h3>
@@ -74,8 +86,10 @@ export default function PolicyCard({
         <div className="flex items-center justify-between text-sm text-slate-600">
           <div className="flex items-center gap-1">
             <DollarSign className="w-3 h-3" />
-            <span>{premium}</span>
-            <span className="text-xs">/monthly</span>
+            <span>{premiumAmount}</span>
+            <span className="text-xs">
+              {premiumFrequency && `/${premiumFrequency}`}
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="w-3 h-3" />
@@ -85,20 +99,29 @@ export default function PolicyCard({
 
         {/* Actions */}
         <div className="flex gap-2 pt-2">
+          {/* View Button */}
           <button
             onClick={onView}
-            className="inline-flex items-center justify-center gap-2 rounded-md border h-10 px-4 py-2 flex-1 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+            className="inline-flex items-center justify-center gap-2 rounded-md border h-10 px-4 py-2 flex-1 text-sm font-medium hover:bg-gray-100 hover:text-gray-700 transition duration-150"
           >
             <Eye className="w-3 h-3 mr-1" /> View
           </button>
+
+          {/* Delete Button (Replaced Edit) */}
           <button
-            onClick={onEdit}
-            className="inline-flex items-center justify-center gap-2 rounded-md border h-10 px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevents accidental navigation
+              onDelete(policyId); // Call the delete handler
+            }}
+            className="inline-flex items-center justify-center gap-2 rounded-md border h-10 px-4 py-2 text-sm font-medium border-red-200 text-red-600 hover:bg-red-50 transition duration-150"
+            title={`Delete Policy ${policyNumber}`}
           >
-            <SquarePen className="w-3 h-3 mr-1" /> Edit
+            <Trash2 className="w-3 h-3 mr-1" /> Delete
           </button>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default PolicyCard;

@@ -240,12 +240,14 @@ const PolicyChatDashboard = () => {
                 by AI
               </p>
             </div>
-            <button
-              className="mt-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition duration-200"
-              style={{ width: "176px", height: "36px" }}
-            >
-              Open Chat Assistant
-            </button>
+            <a href="/chat">
+              <button
+                className="mt-4 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition duration-200"
+                style={{ width: "176px", height: "36px" }}
+              >
+                Open Chat Assistant
+              </button>
+            </a>
           </div>
           {/* Card 2: Add New Policy */}
           <div className="bg-green-600 rounded-lg p-6 flex flex-col justify-between">
