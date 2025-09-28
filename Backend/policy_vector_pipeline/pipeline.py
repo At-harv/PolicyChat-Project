@@ -8,6 +8,10 @@ import csv
 from datetime import datetime
 import sys
 import os
+from sentence_transformers import SentenceTransformer
+
+# Load the model
+sbert_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 BACKEND_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Persistent Chroma (local directory)
@@ -65,7 +69,86 @@ def chunk_text(text, chunk_size=800, overlap=100):
         start += chunk_size - overlap
     return chunks
 
+
+
 def ingest_policy(policy):
+    policy_id = policy["id"]
+    user_id = policy["userId"]
+    documents = policy["documents"]
+
+    if not documents:
+        return
+
+    for doc_path in documents:
+        doc_path = doc_path.lstrip("/")
+        full_path = os.path.join(BACKEND_ROOT, doc_path)
+
+        if not os.path.exists(full_path):
+            print(f"Skipping missing file: {full_path}")
+            continue
+
+        text = extract_text_from_pdf(full_path)
+        chunks = chunk_text(text)
+
+        ids = [f"{policy_id}_{i}" for i in range(len(chunks))]
+        metadatas = [
+            {"policy_id": policy_id, "user_id": user_id, "file": full_path, "chunk": i}
+            for i in range(len(chunks))
+        ]
+
+        # Add to Chroma
+        collection.add(ids=ids, documents=chunks, metadatas=metadatas)
+
+        # Compute embeddings using SentenceTransformer directly
+        embeddings = sbert_model.encode(chunks, show_progress_bar=False)
+
+        for i, emb in enumerate(embeddings):
+            print(f"--- Entry {i + 1} ---")
+            print(f"ID: {ids[i]}")
+            print(f"Document: {chunks[i][:200]}{'...' if len(chunks[i]) > 200 else ''}")
+            print(f"Metadata: {metadatas[i]}")
+            print(f"Embedding length: {len(emb)}\n")
+
+        print(f"Ingested {full_path} for policy {policy_id}")
+
+    policy_id = policy["id"]
+    user_id = policy["userId"]
+    documents = policy["documents"]
+
+    if not documents:
+        return
+
+    for doc_path in documents:
+        doc_path = doc_path.lstrip("/")
+        full_path = os.path.join(BACKEND_ROOT, doc_path)
+
+        if not os.path.exists(full_path):
+            print(f"Skipping missing file: {full_path}")
+            continue
+
+        text = extract_text_from_pdf(full_path)
+        chunks = chunk_text(text)
+
+        ids = [f"{policy_id}_{i}" for i in range(len(chunks))]
+        metadatas = [
+            {"policy_id": policy_id, "user_id": user_id, "file": full_path, "chunk": i}
+            for i in range(len(chunks))
+        ]
+
+        # Add to Chroma
+        collection.add(ids=ids, documents=chunks, metadatas=metadatas)
+
+        # Compute and display embeddings
+        embeddings = embedding_fn.get_embeddings(chunks)
+        for i, emb in enumerate(embeddings):
+            print(f"--- Entry {i + 1} ---")
+            print(f"ID: {ids[i]}")
+            print(f"Document: {chunks[i][:200]}{'...' if len(chunks[i]) > 200 else ''}")  # show first 200 chars
+            print(f"Metadata: {metadatas[i]}")
+            print(f"Embedding length: {len(emb)}\n")
+
+        print(f"Ingested {full_path} for policy {policy_id}")
+
     policy_id = policy["id"]
     user_id = policy["userId"]
     documents = policy["documents"]

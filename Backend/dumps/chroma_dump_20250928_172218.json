@@ -1,0 +1,488 @@
+{
+  "ids": [
+    "18_0",
+    "18_1",
+    "18_2",
+    "18_3",
+    "18_4",
+    "18_5",
+    "18_6",
+    "18_7",
+    "18_8",
+    "18_9",
+    "18_10",
+    "18_11",
+    "18_12",
+    "18_13",
+    "18_14",
+    "18_15",
+    "18_16",
+    "18_17",
+    "18_18",
+    "18_19",
+    "18_20",
+    "18_21",
+    "18_22",
+    "18_23",
+    "18_24",
+    "18_25",
+    "18_26",
+    "18_27",
+    "18_28",
+    "18_29",
+    "19_0",
+    "19_1",
+    "19_2",
+    "19_3",
+    "19_4",
+    "19_5",
+    "19_6",
+    "19_7",
+    "19_8",
+    "19_9",
+    "19_10",
+    "19_11",
+    "19_12",
+    "19_13",
+    "19_14",
+    "19_15",
+    "19_16",
+    "19_17",
+    "19_18",
+    "19_19",
+    "19_20",
+    "19_21",
+    "19_22",
+    "19_23",
+    "19_24",
+    "19_25",
+    "19_26",
+    "19_27",
+    "19_28",
+    "19_29"
+  ],
+  "documents": [
+    "SEMINAR REPORT\nOn\nObject Detection and Scene Understanding: Advance techniques for\nreal-time video analysis\nBy\nAtharv Kanase (TECOMP-B38)\nUnder the guidance of\nMrs. Avani Ray\nDepartment of Computer Engineering\nPimpri Chinchwad College of Engineering and Research, Ravet\nAn Autonomous Institute — NBA Accredited (4 UG Programs) —\nNAAC A++ Accredited — An ISO 21001:2018 Certified\nSA VITRIBAI PHULE PUNE UNIVERSITY\n(2025 - 2026)\nDepartment of Computer Engineering\nPimpri Chinchwad College of Engineering and Research, Ravet\nCERTIFICATE\nThis is to certify thatAtharv KanasefromThird Year Engineeringhas successfully com-\npleted her seminar work titled“Object Detection and Scene Understanding: Advance\ntechniques for real-time video analysis”at Pimpri Chinchwad College of Engineering\nand Research, Rave",
+    "echniques for real-time video analysis”at Pimpri Chinchwad College of Engineering\nand Research, Ravet in the partial fulfillment of the Bachelors Degree in Engineering.\nMrs. Avani Ray\nSeminar Guide\nDr. Vijay A Kotkar\nHOD, Computer Department\nProf. Dr. H.U. Tiwari\nDirector, PCCOE&R, Ravet\nACKNOWLEDGEMENT\nIt gives me pleasure to present a Seminar on “Object Detection and Scene Understand-\ning: Advance techniques for real-time video analysis”. I am very much obliged to my guide\nMrs. Avani Ray, Department of Computer Engineering, for helping me and giving proper\nguidance. I am very thankful to the Head of the DepartmentDr. Vijay A Kotkarand the\nentire staff members for their cooperation. I am also thankful to my family and friends for\ntheir support and constant encouragement towards the fulfil",
+    "so thankful to my family and friends for\ntheir support and constant encouragement towards the fulfilment of the work.\nPlace: Ravet, Pune\nDate:\nAtharv Kanase\nTECOMP-B38\nABSTRACT\nThis seminar explores advanced techniques for real-time object detection and scene un-\nderstanding, fundamental tasks in computer vision that enable machines to recognize, lo-\ncalize, and interpret multiple objects within video streams. With the rapid evolution of deep\nlearning methods such as Convolutional Neural Networks (CNNs) and Vision Transformers\n(ViTs), real-time video analysis has become increasingly accurate and efficient, supporting\ncritical applications like autonomous vehicles, intelligent surveillance, healthcare monitor-\ning, and smart city systems. The seminar examines key challenges—including occlus",
+    "ealthcare monitor-\ning, and smart city systems. The seminar examines key challenges—including occlusion,\nvariable lighting, motion blur, and computational constraints on edge devices—and evalu-\nates state-of-the-art architectures for their speed, accuracy, and adaptability. It also high-\nlights emerging trends such as explainable AI, zero-shot learning, and multimodal sensor\nfusion, emphasizing their potential to enhance the efficiency, robustness, and scalability of\nreal-time video analytics solutions.\nKeywords:Object Detection, Scene Understanding, Real-time Video Analysis, Com-\nputer Vision, Convolutional Neural Networks (CNNs), Vision Transformers (ViTs)\nTABLE OF CONTENTS\nChapter 1: Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+    "oduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1\n1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .1\nChapter 2: Literature Survey . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4\nChapter 3: Existing System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13\nChapter 4: Proposed System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.1 Problem Statement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.2 Objectives . ",
+    ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.2 Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.3 Proposed System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\nChapter 5: Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16\n5.1 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16\n5.2 Future Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .16\nReferences . . . . . . . . . . . . . . . .",
+    ". . . . . . . . . . . . . . . . . . . . . . . . . . . .16\nReferences . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .17\ni\nLIST OF FIGURES\nFigure No Title Page No\n1.1 Architecture of Existing Systems 7\n2.1 Flowchart of Proposed System 9\nii\nLIST OF TABLES\nTable No Title Page No\n2.1 Literature Survey Table 4\niii\nObject Detection and Scene Understanding: Techniques for real-time video analysis 1\n1. INTRODUCTION\n1.1 Introduction\nThe rapid growth of surveillance systems, autonomous vehicles, and smart city applications\nhas fueled the need for efficient real-time video analysis. At the core of this challenge lies\nobject detection and scene understanding, two interdependent tasks that enable systems to\nidentify, loc",
+    "ect detection and scene understanding, two interdependent tasks that enable systems to\nidentify, localize, and interpret objects and their interactions within dynamic environments.\nTraditional computer vision approaches, while effective for constrained scenarios, fail to\ngeneralize in complex, real-world conditions where factors such as occlusion, illumination\nchanges, and fast-moving objects degrade performance. The advent of deep learning, par-\nticularly convolutional neural networks (CNNs) and transformers, has revolutionized this\ndomain, providing significant improvements in accuracy, scalability, and adaptability.\nDespite these advancements, achieving robust real-time performance remains challeng-\ning due to computational complexity, the need for temporal reasoning across frames, and\n",
+    "s challeng-\ning due to computational complexity, the need for temporal reasoning across frames, and\nthe requirement to balance accuracy with latency. Modern approaches integrate object de-\ntection models like YOLOv8 with scene reasoning modules and temporal analysis frame-\nworks to provide richer insights into video streams. Such hybrid systems not only detect\nobjects but also capture contextual relationships and temporal dynamics, enabling applica-\ntions ranging from intelligent surveillance and traffic monitoring to robotics and augmented\nreality. This report explores existing solutions, identifies their limitations, and proposes an\nintegrated architecture for enhancing both the efficiency and reliability of real-time video\nanalysis.\nDepartment of Computer Engineering PCCOER\nObject Detec",
+    " and reliability of real-time video\nanalysis.\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 2\n2. LITERATURE SURVEY\nDivya Nimma, Omaia Al-Omari, Rahul Pradhan, Zoirov Ulmas, RVV Krishna, Ts\nYousef A Baker El-Ebiary, and Vuda Sreenivasa Rao\nObject detection in real-time video surveillance using attention based transformer-\nYOLOv8 model [2025]\nThe study presents an enhanced YOLOv8 model incorporating attention-based transformers\nfor object detection in real-time surveillance. The approach improves accuracy, robustness,\nand adaptability under varying lighting and occlusion conditions.(1)\nSani Abba, Ali Mohammed Bizi, Jeong-A Lee, Souley Bakouri, and Maria Liz Crespo\nReal-time object detection, tracking, and monitorin",
+    "eong-A Lee, Souley Bakouri, and Maria Liz Crespo\nReal-time object detection, tracking, and monitoring framework for security surveil-\nlance systems [2024]\nThis work introduces a real-time framework for object detection, tracking, and monitor-\ning in surveillance systems. It leverages deep learning-based detection with optimized\ntracking pipelines to enhance security monitoring efficiency and robustness in dynamic\nenvironments.(2)\nKrishna Kumar, Krishan Kumar, and C. L. P. Gupta\nObject Detection in Video Frames using Deep Learning [2022]\nThe paper applies deep learning methods for detecting objects in video frames, demonstrat-\ning how neural networks improve detection accuracy and reliability in sequential visual\ndata.(3)\nM. Koteswara Rao and P. M. Ashok Kumar\nExploring the advancements and",
+    " in sequential visual\ndata.(3)\nM. Koteswara Rao and P. M. Ashok Kumar\nExploring the advancements and challenges of object detection in video surveillance\nthrough deep learning: A systematic literature review and outlook [2025]\nThis review systematically analyzes deep learning-based object detection methods for surveil-\nlance, highlighting current progress, challenges such as real-time constraints, and future\ndirections for intelligent monitoring systems.(4)\nPaschalis Tsirtsakis, Georgios Zacharis, George S. Maraslidis, and George F. Fragulis\nDeep learning for object recognition: A comprehensive review of models and algo-\nrithms [2025]\nA comprehensive review of deep learning models and algorithms for object recognition,\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Un",
+    "thms for object recognition,\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 3\ncovering CNNs, transformers, and hybrid approaches. It provides insights into their strengths,\nlimitations, and applications across domains.(5)\nJiajun Wu\nPhysical scene understanding [2024]\nThis article focuses on physical scene understanding, examining how AI models interpret\nand predict real-world environments by integrating perception, reasoning, and physical in-\nteraction principles.(6)\nAm´erico Pereira, Pedro Carvalho, and Lu´ıs Cˆorte-Real\nA transition towards virtual representations of visual scenes [2024]\nThis paper explores the shift towards creating virtual representations of real-world visual\nscenes, emphasizing the role of co",
+    "ift towards creating virtual representations of real-world visual\nscenes, emphasizing the role of computer vision, 3D reconstruction, and immersive tech-\nnologies in enabling digital scene understanding and interaction.(7)\nXingxing Zuo, Pouya Samangouei, Yunwen Zhou, Yan Di, and Mingyang Li\nFMGS: Foundation model embedded 3D Gaussian splatting for holistic 3D scene un-\nderstanding [2025]\nThe paper introduces FMGS, a novel approach combining foundation models with 3D\nGaussian splatting to achieve comprehensive scene understanding, enabling advanced 3D\nperception and reconstruction.(8)\nSichao Liu, Jianjing Zhang, Robert X. Gao, Xi Vincent Wang, and Lihui Wang\nVision-language model-driven scene understanding and robotic object manipulation\n[2024]\nThis work integrates vision-language models wi",
+    " understanding and robotic object manipulation\n[2024]\nThis work integrates vision-language models with robotics for scene understanding and ob-\nject manipulation. It demonstrates how multimodal AI improves robotic perception, plan-\nning, and interaction in unstructured environments.(9)\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 4\nTable 1:Literature survey on Object Detection and Scene Understanding\nResearch Article\n(Author/Year)\nObjective /\nProposed Work\nMethods /\nTechniques\nDatasets Relevant Findings\n/ Limitations\nIdentified\n“Object detection\nin real-time video\nsurveillance using\nattention based\ntransformer-\nYOLOv8 model”\nD. Nimma et al.,\n2025\nReal-time object\ndetection in\nsurveillance\nAttention-based\nTransfo",
+    "LOv8 model”\nD. Nimma et al.,\n2025\nReal-time object\ndetection in\nsurveillance\nAttention-based\nTransformer +\nYOLOv8\nBenchmark\nsurveil-\nlance\ndatasets\nHigh accuracy in\nchallenging\nconditions; requires\nhigh computation\n“Real-time object\ndetection,\ntracking, and\nmonitoring in\nsecurity\nsurveillance” S.\nAbba et al., 2024\nReal-time\ndetection,\ntracking, and\nmonitoring\nframework\nDeep learning\ndetection +\nmulti-object\ntracking\nSurveillance\nvideo\ndatasets\nAchieves real-time\nmonitoring;\nscalability on edge\ndevices challenging\n“Object Detection\nin Video Frames\nusing Deep\nLearning” K.\nKumar et al.,\n2022\nObject detection\nin video frames\nDeep learning\ndetection\nmodels\nVideo\nframe\ndatasets\nBetter accuracy\nthan classical\nmethods; limited\nbenchmarking\nDepartment of Computer Engineering PCCOER\nObject Detection",
+    "n classical\nmethods; limited\nbenchmarking\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 5\n“Exploring the\nAdvancements\nand Challenges of\nObject Detection\nin Video\nSurveillance\nthrough Deep\nLearning: A\nSystematic\nLiterature Review\nand Outlook” M.\nK. Rao et al.,\n2025\nReview of deep\nlearning in video\nsurveillance\nSystematic\nliterature review\nLiterature-\nbased\nIdentifies\nadvancements and\nchallenges; no\nexperimental\nvalidation\n“Deep learning\nfor object\nrecognition: A\ncomprehensive\nreview of models\nand algorithms”\nP. Tsirtsakis et al.,\n2025\nComprehensive\nreview of\nrecognition\nmodels\nCNNs,\nTransformers,\nHybrid DL\nalgorithms\nLiterature\nreview\nProvides taxonomy\nof models; lacks\nempirical\nevaluation\n“Physical scene\nundersta",
+    "s\nLiterature\nreview\nProvides taxonomy\nof models; lacks\nempirical\nevaluation\n“Physical scene\nunderstanding” J.\nWu, 2024\nPhysical scene\nunderstanding in\nAI\nCognitive\nreasoning +\nphysics priors\nConceptual\n+ case\nstudy\ndatasets\nBridges perception\nand reasoning;\nlimited\nimplementations\n“A transition\ntowards virtual\nrepresentations of\nvisual scenes” A.\nPereira et al.,\n2024\nTransition\ntowards virtual\nscene\nrepresentations\n3D\nreconstruction,\nimmersive\nvisualization\nConceptual\nframe-\nwork\nOutlines digital\ntwin approach;\nlacks real-world\nimplementation\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 6\n“FMGS:\nFoundation\nmodel embedded\n3D Gaussian\nsplatting for\nholistic 3D scene\nunderstanding”\nX. Zuo et al.,\n2025\nHolistic 3D s",
+    "mbedded\n3D Gaussian\nsplatting for\nholistic 3D scene\nunderstanding”\nX. Zuo et al.,\n2025\nHolistic 3D scene\nunderstanding\nFMGS: 3D\nGaussian\nsplatting +\nfoundation\nmodels\nSynthetic\n+ real 3D\ndatasets\nEnables detailed\n3D reconstruction;\ncomputationally\nexpensive\n“Vision-language\nmodel-driven\nscene\nunderstanding\nand robotic object\nmanipulation” S.\nLiu et al., 2024\nVision-language\nfor robotic scene\nunderstanding\nVision-\nlanguage\nmodels +\nrobotic\nmanipulation\nRobotics\ndatasets\nImproves robotic\nperception;\ngeneralization\nremains limited\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 7\n3. EXISTING SYSTEM\nRecent advancements in real-time video analysis for object detection and scene under-\nstanding have evolved from conventi",
+    "n real-time video analysis for object detection and scene under-\nstanding have evolved from conventional CNN-based models like Faster R-CNN and early\nYOLO variants (Kumar et al., 2022) toward more sophisticated hybrid approaches. Tradi-\ntional YOLO-based frameworks (Abba et al., 2024) remain lightweight and fast for surveil-\nlance applications but face challenges with occlusion and crowded scenes. To address this,\ntransformer-enhanced architectures such as Attention-based YOLOv8 (Nimma et al., 2025)\nintegrate self-attention mechanisms to improve accuracy and robustness in complex envi-\nronments, making them among the most effective current solutions for surveillance tasks.\nComplementing detection, recent work on scene understanding (Wu, 2024; Pereira et al.,\n2024; Zuo et al., 2025; Liu et ",
+    "ction, recent work on scene understanding (Wu, 2024; Pereira et al.,\n2024; Zuo et al., 2025; Liu et al., 2024) leverages foundation models, 3D Gaussian splat-\nting, and vision-language integration to move beyond bounding boxes, enabling holistic\ninterpretation of environments and object interactions. Collectively, these approaches high-\nlight a clear shift toward real-time, transformer-driven, and multimodal architectures that\nbalance speed, accuracy, and contextual understanding.\nFigure 3.1: Architecture of Existing Systems\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 8\n4. PROPOSED SYSTEM\n4.1 Problem Statement\nThe central problem in real-time video analysis is the critical trade-off between\nspeed and accuracy. ",
+    "e central problem in real-time video analysis is the critical trade-off between\nspeed and accuracy. While modern systems can identify objects, they often fail to do so\ninstantly and accurately in the face of real-world complexities like occlusions, diverse light-\ning, and dynamic environments. This gap prevents their widespread adoption in mission-\ncritical applications where split-second decisions are essential.\n4.2 Objectives\n1. Examine state-of-the-art techniques for real-time object detection and scene un-\nderstanding in video analysis.\n2. Compare and evaluate deep learning architectures (e.g., CNNs, ViTs) in terms of speed,\naccuracy, and adaptability to dynamic environments\n3. Analyze key challenges such as occlusion, motion blur, variable lighting, and computa-\ntional constraints.\n4.",
+    "ey challenges such as occlusion, motion blur, variable lighting, and computa-\ntional constraints.\n4. Explore model optimization strategies for efficient deployment on edge and embedded\nsystems.\n5. Investigate future trends: explainable AI, zero-shot learning, and multimodal sensor\nfusion.\n4.3 Proposed System\nThe proposed solution integrates real-time object detection with scene understand-\ning and temporal reasoning to improve the accuracy and robustness of video analysis. In-\ncoming video streams are first processed by YOLOv8 to detect and localize objects. The\nextracted features are then passed into two parallel modules: a Scene Reasoning Mod-\nule, which uses transformer or graph-based networks to understand spatial relationships\nbetween objects, and a Temporal Module, which leverages Co",
+    "works to understand spatial relationships\nbetween objects, and a Temporal Module, which leverages ConvLSTMs or temporal trans-\nformers to capture motion dynamics across frames. The outputs are fused to generate anno-\ntated video feeds with alerts, enabling more intelligent monitoring that adapts to complex\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 9\nenvironments and real-time constraints.\n4.3.1 YOLOv8 Backbone\nYOLOv8 is a state-of-the-art object detection model that provides real-time per-\nformance while maintaining high accuracy. It uses a lightweight yet powerful convolutional\nbackbone and optimized detection head, making it ideal for surveillance scenarios where\nspeed and precision are critical.\n4.3.2 Scen",
+    " head, making it ideal for surveillance scenarios where\nspeed and precision are critical.\n4.3.2 Scene Reasoning Module\nThe scene reasoning module is designed to go beyond simple object detection by\nmodeling relationships between objects in a frame. Using transformers or graph neural\nnetworks (GNNs), this module captures contextual dependencies — such as proximity,\ninteractions, and co-occurrence — which helps the system better interpret complex scenes.\nFigure 4.1: Flowchart of the Proposed System\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 10\n5. CONCLUSION & FUTURE SCOPE\n5.1 Conclusion\nReal-time video analysis through object detection and scene understanding is not\njust a technological advancement but a paradig",
+    "rough object detection and scene understanding is not\njust a technological advancement but a paradigm shift. We have moved from simply pro-\ncessing pixels to interpreting the visual world with speed and accuracy. The ability to iden-\ntify objects and comprehend their relationships in dynamic environments has transcended\nthe boundaries of research, becoming a foundational technology for a new era of intelligent\nsystems.\n5.2 Future Scope\nThe future of this field is focused on overcoming remaining challenges, such as\nimproving performance on low-power edge devices and ensuring robustness in every con-\nceivable condition. This will lead to the next generation of applications that are safer, more\nefficient, and more integrated into our daily lives, from fully autonomous transportation to\nperson",
+    "\nefficient, and more integrated into our daily lives, from fully autonomous transportation to\npersonalized healthcare and beyond. As we continue to refine these techniques, the line\nbetween human and machine perception will continue to blur, unlocking unprecedented\npotential across countless industries.\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 11\nREFERENCES\n[1] D. Nimma, O. Al-Omari, R. Pradhan, Z. Ulmas, R. Krishna, T. Y . A. B. El-Ebiary,\nand V . S. Rao, “Object detection in real-time video surveillance using attention based\ntransformer-yolov8 model,”Alexandria Engineering Journal, vol. 118, pp. 482–495,\n2025.\n[2] S. Abba, A. M. Bizi, J.-A. Lee, S. Bakouri, and M. L. Crespo, “Real-time object detec-\ntion, ",
+    "5.\n[2] S. Abba, A. M. Bizi, J.-A. Lee, S. Bakouri, and M. L. Crespo, “Real-time object detec-\ntion, tracking, and monitoring framework for security surveillance systems,”Heliyon,\nvol. 10, no. 15, 2024.\n[3] K. Kumar, K. Kumar, and C. Gupta, “Object detection in video frames using deep\nlearning,”International Journal of Computer Applications, vol. 183, no. 51, pp. 975–\n8887, 2022.\n[4] M. K. RAO and P. A. KUMAR23, “Exploring the advancements and challenges of\nobject detection in video surveillance through deep learning: A systematic literature\nreview and outlook,”Journal of Theoretical and Applied Information Technology, vol.\n103, no. 6, 2025.\n[5] P. Tsirtsakis, G. Zacharis, G. S. Maraslidis, and G. F. Fragulis, “Deep learning for\nobject recognition: A comprehensive review of models and algor",
+    "nd G. F. Fragulis, “Deep learning for\nobject recognition: A comprehensive review of models and algorithms,”International\nJournal of Cognitive Computing in Engineering, 2025.\n[6] J. Wu, “Physical scene understanding,”AI Magazine, vol. 45, no. 1, pp. 156–164, 2024.\n[7] A. Pereira, P. Carvalho, and L. Cˆorte-Real, “A transition towards virtual representations\nof visual scenes,”arXiv preprint arXiv:2410.07987, 2024.\n[8] X. Zuo, P. Samangouei, Y . Zhou, Y . Di, and M. Li, “Fmgs: Foundation model embed-\nded 3d gaussian splatting for holistic 3d scene understanding,”International Journal of\nComputer Vision, vol. 133, no. 2, pp. 611–627, 2025.\n[9] S. Liu, J. Zhang, R. X. Gao, X. V . Wang, and L. Wang, “Vision-language model-driven\nscene understanding and robotic object manipulation,” in2024 IEEE 2",
+    "g, “Vision-language model-driven\nscene understanding and robotic object manipulation,” in2024 IEEE 20th International\nConference on Automation Science and Engineering (CASE). IEEE, 2024, pp. 21–26.\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 12\nPLAGIARISM REPORT\nDepartment of Computer Engineering PCCOER",
+    "SEMINAR REPORT\nOn\nObject Detection and Scene Understanding: Advance techniques for\nreal-time video analysis\nBy\nAtharv Kanase (TECOMP-B38)\nUnder the guidance of\nMrs. Avani Ray\nDepartment of Computer Engineering\nPimpri Chinchwad College of Engineering and Research, Ravet\nAn Autonomous Institute — NBA Accredited (4 UG Programs) —\nNAAC A++ Accredited — An ISO 21001:2018 Certified\nSA VITRIBAI PHULE PUNE UNIVERSITY\n(2025 - 2026)\nDepartment of Computer Engineering\nPimpri Chinchwad College of Engineering and Research, Ravet\nCERTIFICATE\nThis is to certify thatAtharv KanasefromThird Year Engineeringhas successfully com-\npleted his seminar work titled“Object Detection and Scene Understanding: Advance\ntechniques for real-time video analysis”at Pimpri Chinchwad College of Engineering\nand Research, Rave",
+    "echniques for real-time video analysis”at Pimpri Chinchwad College of Engineering\nand Research, Ravet in the partial fulfillment of the Bachelors Degree in Engineering.\nMrs. Avani Ray\nSeminar Guide\nDr. Vijay A Kotkar\nHOD, Computer Department\nProf. Dr. H.U. Tiwari\nDirector, PCCOE&R, Ravet\nACKNOWLEDGEMENT\nIt gives me pleasure to present a Seminar on “Object Detection and Scene Understand-\ning: Advance techniques for real-time video analysis”. I am very much obliged to my guide\nMrs. Avani Ray, Department of Computer Engineering, for helping me and giving proper\nguidance. I am very thankful to the Head of the DepartmentDr. Vijay A Kotkarand the\nentire staff members for their cooperation. I am also thankful to my family and friends for\ntheir support and constant encouragement towards the fulfil",
+    "so thankful to my family and friends for\ntheir support and constant encouragement towards the fulfilment of the work.\nPlace: Ravet, Pune\nDate:\nAtharv Kanase\nTECOMP-B38\nABSTRACT\nThis seminar explores advanced techniques for real-time object detection and scene un-\nderstanding, fundamental tasks in computer vision that enable machines to recognize, lo-\ncalize, and interpret multiple objects within video streams. With the rapid evolution of deep\nlearning methods such as Convolutional Neural Networks (CNNs) and Vision Transformers\n(ViTs), real-time video analysis has become increasingly accurate and efficient, supporting\ncritical applications like autonomous vehicles, intelligent surveillance, healthcare monitor-\ning, and smart city systems. The seminar examines key challenges—including occlus",
+    "ealthcare monitor-\ning, and smart city systems. The seminar examines key challenges—including occlusion,\nvariable lighting, motion blur, and computational constraints on edge devices—and evalu-\nates state-of-the-art architectures for their speed, accuracy, and adaptability. It also high-\nlights emerging trends such as explainable AI, zero-shot learning, and multimodal sensor\nfusion, emphasizing their potential to enhance the efficiency, robustness, and scalability of\nreal-time video analytics solutions.\nKeywords:Object Detection, Scene Understanding, Real-time Video Analysis, Com-\nputer Vision, Convolutional Neural Networks (CNNs), Vision Transformers (ViTs)\nTABLE OF CONTENTS\nChapter 1: Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+    "oduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1\n1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .1\nChapter 2: Literature Survey . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4\nChapter 3: Existing System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13\nChapter 4: Proposed System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.1 Problem Statement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.2 Objectives . ",
+    ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.2 Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\n4.3 Proposed System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14\nChapter 5: Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16\n5.1 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16\n5.2 Future Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .16\nReferences . . . . . . . . . . . . . . . .",
+    ". . . . . . . . . . . . . . . . . . . . . . . . . . . .16\nReferences . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .17\ni\nLIST OF FIGURES\nFigure No Title Page No\n1.1 Architecture of Existing Systems 7\n2.1 Flowchart of Proposed System 9\nii\nLIST OF TABLES\nTable No Title Page No\n2.1 Literature Survey Table 4\niii\nObject Detection and Scene Understanding: Techniques for real-time video analysis 1\n1. INTRODUCTION\n1.1 Introduction\nThe rapid growth of surveillance systems, autonomous vehicles, and smart city applications\nhas fueled the need for efficient real-time video analysis. At the core of this challenge lies\nobject detection and scene understanding, two interdependent tasks that enable systems to\nidentify, loc",
+    "ect detection and scene understanding, two interdependent tasks that enable systems to\nidentify, localize, and interpret objects and their interactions within dynamic environments.\nTraditional computer vision approaches, while effective for constrained scenarios, fail to\ngeneralize in complex, real-world conditions where factors such as occlusion, illumination\nchanges, and fast-moving objects degrade performance. The advent of deep learning, par-\nticularly convolutional neural networks (CNNs) and transformers, has revolutionized this\ndomain, providing significant improvements in accuracy, scalability, and adaptability.\nDespite these advancements, achieving robust real-time performance remains challeng-\ning due to computational complexity, the need for temporal reasoning across frames, and\n",
+    "s challeng-\ning due to computational complexity, the need for temporal reasoning across frames, and\nthe requirement to balance accuracy with latency. Modern approaches integrate object de-\ntection models like YOLOv8 with scene reasoning modules and temporal analysis frame-\nworks to provide richer insights into video streams. Such hybrid systems not only detect\nobjects but also capture contextual relationships and temporal dynamics, enabling applica-\ntions ranging from intelligent surveillance and traffic monitoring to robotics and augmented\nreality. This report explores existing solutions, identifies their limitations, and proposes an\nintegrated architecture for enhancing both the efficiency and reliability of real-time video\nanalysis.\nDepartment of Computer Engineering PCCOER\nObject Detec",
+    " and reliability of real-time video\nanalysis.\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 2\n2. LITERATURE SURVEY\nDivya Nimma, Omaia Al-Omari, Rahul Pradhan, Zoirov Ulmas, RVV Krishna, Ts\nYousef A Baker El-Ebiary, and Vuda Sreenivasa Rao\nObject detection in real-time video surveillance using attention based transformer-\nYOLOv8 model [2025]\nThe study presents an enhanced YOLOv8 model incorporating attention-based transformers\nfor object detection in real-time surveillance. The approach improves accuracy, robustness,\nand adaptability under varying lighting and occlusion conditions.(1)\nSani Abba, Ali Mohammed Bizi, Jeong-A Lee, Souley Bakouri, and Maria Liz Crespo\nReal-time object detection, tracking, and monitorin",
+    "eong-A Lee, Souley Bakouri, and Maria Liz Crespo\nReal-time object detection, tracking, and monitoring framework for security surveil-\nlance systems [2024]\nThis work introduces a real-time framework for object detection, tracking, and monitor-\ning in surveillance systems. It leverages deep learning-based detection with optimized\ntracking pipelines to enhance security monitoring efficiency and robustness in dynamic\nenvironments.(2)\nKrishna Kumar, Krishan Kumar, and C. L. P. Gupta\nObject Detection in Video Frames using Deep Learning [2022]\nThe paper applies deep learning methods for detecting objects in video frames, demonstrat-\ning how neural networks improve detection accuracy and reliability in sequential visual\ndata.(3)\nM. Koteswara Rao and P. M. Ashok Kumar\nExploring the advancements and",
+    " in sequential visual\ndata.(3)\nM. Koteswara Rao and P. M. Ashok Kumar\nExploring the advancements and challenges of object detection in video surveillance\nthrough deep learning: A systematic literature review and outlook [2025]\nThis review systematically analyzes deep learning-based object detection methods for surveil-\nlance, highlighting current progress, challenges such as real-time constraints, and future\ndirections for intelligent monitoring systems.(4)\nPaschalis Tsirtsakis, Georgios Zacharis, George S. Maraslidis, and George F. Fragulis\nDeep learning for object recognition: A comprehensive review of models and algo-\nrithms [2025]\nA comprehensive review of deep learning models and algorithms for object recognition,\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Un",
+    "thms for object recognition,\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 3\ncovering CNNs, transformers, and hybrid approaches. It provides insights into their strengths,\nlimitations, and applications across domains.(5)\nJiajun Wu\nPhysical scene understanding [2024]\nThis article focuses on physical scene understanding, examining how AI models interpret\nand predict real-world environments by integrating perception, reasoning, and physical in-\nteraction principles.(6)\nAm´erico Pereira, Pedro Carvalho, and Lu´ıs Cˆorte-Real\nA transition towards virtual representations of visual scenes [2024]\nThis paper explores the shift towards creating virtual representations of real-world visual\nscenes, emphasizing the role of co",
+    "ift towards creating virtual representations of real-world visual\nscenes, emphasizing the role of computer vision, 3D reconstruction, and immersive tech-\nnologies in enabling digital scene understanding and interaction.(7)\nXingxing Zuo, Pouya Samangouei, Yunwen Zhou, Yan Di, and Mingyang Li\nFMGS: Foundation model embedded 3D Gaussian splatting for holistic 3D scene un-\nderstanding [2025]\nThe paper introduces FMGS, a novel approach combining foundation models with 3D\nGaussian splatting to achieve comprehensive scene understanding, enabling advanced 3D\nperception and reconstruction.(8)\nSichao Liu, Jianjing Zhang, Robert X. Gao, Xi Vincent Wang, and Lihui Wang\nVision-language model-driven scene understanding and robotic object manipulation\n[2024]\nThis work integrates vision-language models wi",
+    " understanding and robotic object manipulation\n[2024]\nThis work integrates vision-language models with robotics for scene understanding and ob-\nject manipulation. It demonstrates how multimodal AI improves robotic perception, plan-\nning, and interaction in unstructured environments.(9)\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 4\nTable 1:Literature survey on Object Detection and Scene Understanding\nResearch Article\n(Author/Year)\nObjective /\nProposed Work\nMethods /\nTechniques\nDatasets Relevant Findings\n/ Limitations\nIdentified\n“Object detection\nin real-time video\nsurveillance using\nattention based\ntransformer-\nYOLOv8 model”\nD. Nimma et al.,\n2025\nReal-time object\ndetection in\nsurveillance\nAttention-based\nTransfo",
+    "LOv8 model”\nD. Nimma et al.,\n2025\nReal-time object\ndetection in\nsurveillance\nAttention-based\nTransformer +\nYOLOv8\nBenchmark\nsurveil-\nlance\ndatasets\nHigh accuracy in\nchallenging\nconditions; requires\nhigh computation\n“Real-time object\ndetection,\ntracking, and\nmonitoring in\nsecurity\nsurveillance” S.\nAbba et al., 2024\nReal-time\ndetection,\ntracking, and\nmonitoring\nframework\nDeep learning\ndetection +\nmulti-object\ntracking\nSurveillance\nvideo\ndatasets\nAchieves real-time\nmonitoring;\nscalability on edge\ndevices challenging\n“Object Detection\nin Video Frames\nusing Deep\nLearning” K.\nKumar et al.,\n2022\nObject detection\nin video frames\nDeep learning\ndetection\nmodels\nVideo\nframe\ndatasets\nBetter accuracy\nthan classical\nmethods; limited\nbenchmarking\nDepartment of Computer Engineering PCCOER\nObject Detection",
+    "n classical\nmethods; limited\nbenchmarking\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 5\n“Exploring the\nAdvancements\nand Challenges of\nObject Detection\nin Video\nSurveillance\nthrough Deep\nLearning: A\nSystematic\nLiterature Review\nand Outlook” M.\nK. Rao et al.,\n2025\nReview of deep\nlearning in video\nsurveillance\nSystematic\nliterature review\nLiterature-\nbased\nIdentifies\nadvancements and\nchallenges; no\nexperimental\nvalidation\n“Deep learning\nfor object\nrecognition: A\ncomprehensive\nreview of models\nand algorithms”\nP. Tsirtsakis et al.,\n2025\nComprehensive\nreview of\nrecognition\nmodels\nCNNs,\nTransformers,\nHybrid DL\nalgorithms\nLiterature\nreview\nProvides taxonomy\nof models; lacks\nempirical\nevaluation\n“Physical scene\nundersta",
+    "s\nLiterature\nreview\nProvides taxonomy\nof models; lacks\nempirical\nevaluation\n“Physical scene\nunderstanding” J.\nWu, 2024\nPhysical scene\nunderstanding in\nAI\nCognitive\nreasoning +\nphysics priors\nConceptual\n+ case\nstudy\ndatasets\nBridges perception\nand reasoning;\nlimited\nimplementations\n“A transition\ntowards virtual\nrepresentations of\nvisual scenes” A.\nPereira et al.,\n2024\nTransition\ntowards virtual\nscene\nrepresentations\n3D\nreconstruction,\nimmersive\nvisualization\nConceptual\nframe-\nwork\nOutlines digital\ntwin approach;\nlacks real-world\nimplementation\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 6\n“FMGS:\nFoundation\nmodel embedded\n3D Gaussian\nsplatting for\nholistic 3D scene\nunderstanding”\nX. Zuo et al.,\n2025\nHolistic 3D s",
+    "mbedded\n3D Gaussian\nsplatting for\nholistic 3D scene\nunderstanding”\nX. Zuo et al.,\n2025\nHolistic 3D scene\nunderstanding\nFMGS: 3D\nGaussian\nsplatting +\nfoundation\nmodels\nSynthetic\n+ real 3D\ndatasets\nEnables detailed\n3D reconstruction;\ncomputationally\nexpensive\n“Vision-language\nmodel-driven\nscene\nunderstanding\nand robotic object\nmanipulation” S.\nLiu et al., 2024\nVision-language\nfor robotic scene\nunderstanding\nVision-\nlanguage\nmodels +\nrobotic\nmanipulation\nRobotics\ndatasets\nImproves robotic\nperception;\ngeneralization\nremains limited\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 7\n3. EXISTING SYSTEM\nRecent advancements in real-time video analysis for object detection and scene under-\nstanding have evolved from conventi",
+    "n real-time video analysis for object detection and scene under-\nstanding have evolved from conventional CNN-based models like Faster R-CNN and early\nYOLO variants (Kumar et al., 2022) toward more sophisticated hybrid approaches. Tradi-\ntional YOLO-based frameworks (Abba et al., 2024) remain lightweight and fast for surveil-\nlance applications but face challenges with occlusion and crowded scenes. To address this,\ntransformer-enhanced architectures such as Attention-based YOLOv8 (Nimma et al., 2025)\nintegrate self-attention mechanisms to improve accuracy and robustness in complex envi-\nronments, making them among the most effective current solutions for surveillance tasks.\nComplementing detection, recent work on scene understanding (Wu, 2024; Pereira et al.,\n2024; Zuo et al., 2025; Liu et ",
+    "ction, recent work on scene understanding (Wu, 2024; Pereira et al.,\n2024; Zuo et al., 2025; Liu et al., 2024) leverages foundation models, 3D Gaussian splat-\nting, and vision-language integration to move beyond bounding boxes, enabling holistic\ninterpretation of environments and object interactions. Collectively, these approaches high-\nlight a clear shift toward real-time, transformer-driven, and multimodal architectures that\nbalance speed, accuracy, and contextual understanding.\nFigure 3.1: Architecture of Existing Systems\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 8\n4. PROPOSED SYSTEM\n4.1 Problem Statement\nThe central problem in real-time video analysis is the critical trade-off between\nspeed and accuracy. ",
+    "e central problem in real-time video analysis is the critical trade-off between\nspeed and accuracy. While modern systems can identify objects, they often fail to do so\ninstantly and accurately in the face of real-world complexities like occlusions, diverse light-\ning, and dynamic environments. This gap prevents their widespread adoption in mission-\ncritical applications where split-second decisions are essential.\n4.2 Objectives\n1. Examine state-of-the-art techniques for real-time object detection and scene un-\nderstanding in video analysis.\n2. Compare and evaluate deep learning architectures (e.g., CNNs, ViTs) in terms of speed,\naccuracy, and adaptability to dynamic environments\n3. Analyze key challenges such as occlusion, motion blur, variable lighting, and computa-\ntional constraints.\n4.",
+    "ey challenges such as occlusion, motion blur, variable lighting, and computa-\ntional constraints.\n4. Explore model optimization strategies for efficient deployment on edge and embedded\nsystems.\n5. Investigate future trends: explainable AI, zero-shot learning, and multimodal sensor\nfusion.\n4.3 Proposed System\nThe proposed solution integrates real-time object detection with scene understand-\ning and temporal reasoning to improve the accuracy and robustness of video analysis. In-\ncoming video streams are first processed by YOLOv8 to detect and localize objects. The\nextracted features are then passed into two parallel modules: a Scene Reasoning Mod-\nule, which uses transformer or graph-based networks to understand spatial relationships\nbetween objects, and a Temporal Module, which leverages Co",
+    "works to understand spatial relationships\nbetween objects, and a Temporal Module, which leverages ConvLSTMs or temporal trans-\nformers to capture motion dynamics across frames. The outputs are fused to generate anno-\ntated video feeds with alerts, enabling more intelligent monitoring that adapts to complex\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 9\nenvironments and real-time constraints.\n4.3.1 YOLOv8 Backbone\nYOLOv8 is a state-of-the-art object detection model that provides real-time per-\nformance while maintaining high accuracy. It uses a lightweight yet powerful convolutional\nbackbone and optimized detection head, making it ideal for surveillance scenarios where\nspeed and precision are critical.\n4.3.2 Scen",
+    " head, making it ideal for surveillance scenarios where\nspeed and precision are critical.\n4.3.2 Scene Reasoning Module\nThe scene reasoning module is designed to go beyond simple object detection by\nmodeling relationships between objects in a frame. Using transformers or graph neural\nnetworks (GNNs), this module captures contextual dependencies — such as proximity,\ninteractions, and co-occurrence — which helps the system better interpret complex scenes.\nFigure 4.1: Flowchart of the Proposed System\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 10\n5. CONCLUSION & FUTURE SCOPE\n5.1 Conclusion\nReal-time video analysis through object detection and scene understanding is not\njust a technological advancement but a paradig",
+    "rough object detection and scene understanding is not\njust a technological advancement but a paradigm shift. We have moved from simply pro-\ncessing pixels to interpreting the visual world with speed and accuracy. The ability to iden-\ntify objects and comprehend their relationships in dynamic environments has transcended\nthe boundaries of research, becoming a foundational technology for a new era of intelligent\nsystems.\n5.2 Future Scope\nThe future of this field is focused on overcoming remaining challenges, such as\nimproving performance on low-power edge devices and ensuring robustness in every con-\nceivable condition. This will lead to the next generation of applications that are safer, more\nefficient, and more integrated into our daily lives, from fully autonomous transportation to\nperson",
+    "\nefficient, and more integrated into our daily lives, from fully autonomous transportation to\npersonalized healthcare and beyond. As we continue to refine these techniques, the line\nbetween human and machine perception will continue to blur, unlocking unprecedented\npotential across countless industries.\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 11\nREFERENCES\n[1] D. Nimma, O. Al-Omari, R. Pradhan, Z. Ulmas, R. Krishna, T. Y . A. B. El-Ebiary,\nand V . S. Rao, “Object detection in real-time video surveillance using attention based\ntransformer-yolov8 model,”Alexandria Engineering Journal, vol. 118, pp. 482–495,\n2025.\n[2] S. Abba, A. M. Bizi, J.-A. Lee, S. Bakouri, and M. L. Crespo, “Real-time object detec-\ntion, ",
+    "5.\n[2] S. Abba, A. M. Bizi, J.-A. Lee, S. Bakouri, and M. L. Crespo, “Real-time object detec-\ntion, tracking, and monitoring framework for security surveillance systems,”Heliyon,\nvol. 10, no. 15, 2024.\n[3] K. Kumar, K. Kumar, and C. Gupta, “Object detection in video frames using deep\nlearning,”International Journal of Computer Applications, vol. 183, no. 51, pp. 975–\n8887, 2022.\n[4] M. K. RAO and P. A. KUMAR23, “Exploring the advancements and challenges of\nobject detection in video surveillance through deep learning: A systematic literature\nreview and outlook,”Journal of Theoretical and Applied Information Technology, vol.\n103, no. 6, 2025.\n[5] P. Tsirtsakis, G. Zacharis, G. S. Maraslidis, and G. F. Fragulis, “Deep learning for\nobject recognition: A comprehensive review of models and algor",
+    "nd G. F. Fragulis, “Deep learning for\nobject recognition: A comprehensive review of models and algorithms,”International\nJournal of Cognitive Computing in Engineering, 2025.\n[6] J. Wu, “Physical scene understanding,”AI Magazine, vol. 45, no. 1, pp. 156–164, 2024.\n[7] A. Pereira, P. Carvalho, and L. Cˆorte-Real, “A transition towards virtual representations\nof visual scenes,”arXiv preprint arXiv:2410.07987, 2024.\n[8] X. Zuo, P. Samangouei, Y . Zhou, Y . Di, and M. Li, “Fmgs: Foundation model embed-\nded 3d gaussian splatting for holistic 3d scene understanding,”International Journal of\nComputer Vision, vol. 133, no. 2, pp. 611–627, 2025.\n[9] S. Liu, J. Zhang, R. X. Gao, X. V . Wang, and L. Wang, “Vision-language model-driven\nscene understanding and robotic object manipulation,” in2024 IEEE 2",
+    "g, “Vision-language model-driven\nscene understanding and robotic object manipulation,” in2024 IEEE 20th International\nConference on Automation Science and Engineering (CASE). IEEE, 2024, pp. 21–26.\nDepartment of Computer Engineering PCCOER\nObject Detection and Scene Understanding: Techniques for real-time video analysis 12\nPLAGIARISM REPORT\nDepartment of Computer Engineering PCCOER"
+  ],
+  "metadatas": [
+    {
+      "policy_id": 18,
+      "chunk": 0,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1
+    },
+    {
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18,
+      "chunk": 1
+    },
+    {
+      "user_id": 1,
+      "policy_id": 18,
+      "chunk": 2,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf"
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 3,
+      "user_id": 1,
+      "policy_id": 18
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18,
+      "chunk": 4,
+      "user_id": 1
+    },
+    {
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18,
+      "chunk": 5
+    },
+    {
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1,
+      "chunk": 6
+    },
+    {
+      "chunk": 7,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1,
+      "policy_id": 18
+    },
+    {
+      "user_id": 1,
+      "chunk": 8,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18
+    },
+    {
+      "user_id": 1,
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 9
+    },
+    {
+      "policy_id": 18,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 10
+    },
+    {
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 11,
+      "policy_id": 18
+    },
+    {
+      "chunk": 12,
+      "policy_id": 18,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf"
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 13,
+      "policy_id": 18,
+      "user_id": 1
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18,
+      "chunk": 14,
+      "user_id": 1
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18,
+      "chunk": 15,
+      "user_id": 1
+    },
+    {
+      "chunk": 16,
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 17,
+      "user_id": 1,
+      "policy_id": 18
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1,
+      "policy_id": 18,
+      "chunk": 18
+    },
+    {
+      "user_id": 1,
+      "policy_id": 18,
+      "chunk": 19,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf"
+    },
+    {
+      "chunk": 20,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18
+    },
+    {
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1,
+      "chunk": 21
+    },
+    {
+      "user_id": 1,
+      "chunk": 22,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "policy_id": 18
+    },
+    {
+      "chunk": 23,
+      "user_id": 1,
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf"
+    },
+    {
+      "policy_id": 18,
+      "chunk": 24,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "user_id": 1
+    },
+    {
+      "user_id": 1,
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 25
+    },
+    {
+      "chunk": 26,
+      "user_id": 1,
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf"
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 27,
+      "user_id": 1,
+      "policy_id": 18
+    },
+    {
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf",
+      "chunk": 28,
+      "user_id": 1
+    },
+    {
+      "chunk": 29,
+      "user_id": 1,
+      "policy_id": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759057594685-report (4).pdf"
+    },
+    {
+      "chunk": 0,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1,
+      "policy_id": 19
+    },
+    {
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19,
+      "chunk": 1
+    },
+    {
+      "chunk": 2,
+      "policy_id": 19,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf"
+    },
+    {
+      "chunk": 3,
+      "policy_id": 19,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1
+    },
+    {
+      "chunk": 4,
+      "policy_id": 19,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf"
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1,
+      "chunk": 5,
+      "policy_id": 19
+    },
+    {
+      "chunk": 6,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1,
+      "policy_id": 19
+    },
+    {
+      "policy_id": 19,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 7
+    },
+    {
+      "user_id": 1,
+      "policy_id": 19,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 8
+    },
+    {
+      "chunk": 9,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19
+    },
+    {
+      "policy_id": 19,
+      "chunk": 10,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19,
+      "user_id": 1,
+      "chunk": 11
+    },
+    {
+      "chunk": 12,
+      "user_id": 1,
+      "policy_id": 19,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf"
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 13,
+      "policy_id": 19,
+      "user_id": 1
+    },
+    {
+      "chunk": 14,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1,
+      "policy_id": 19,
+      "chunk": 15
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 16,
+      "user_id": 1,
+      "policy_id": 19
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1,
+      "chunk": 17,
+      "policy_id": 19
+    },
+    {
+      "chunk": 18,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1,
+      "policy_id": 19
+    },
+    {
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19,
+      "chunk": 19
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19,
+      "chunk": 20,
+      "user_id": 1
+    },
+    {
+      "policy_id": 19,
+      "chunk": 21,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "user_id": 1
+    },
+    {
+      "policy_id": 19,
+      "user_id": 1,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 22
+    },
+    {
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 23,
+      "user_id": 1,
+      "policy_id": 19
+    },
+    {
+      "policy_id": 19,
+      "user_id": 1,
+      "chunk": 24,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf"
+    },
+    {
+      "policy_id": 19,
+      "user_id": 1,
+      "chunk": 25,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf"
+    },
+    {
+      "chunk": 26,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19,
+      "user_id": 1
+    },
+    {
+      "policy_id": 19,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 27,
+      "user_id": 1
+    },
+    {
+      "user_id": 1,
+      "policy_id": 19,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "chunk": 28
+    },
+    {
+      "chunk": 29,
+      "file": "D:\\qwerty\\Backend\\uploads/1759060320622-report__1_.pdf",
+      "policy_id": 19,
+      "user_id": 1
+    }
+  ]
+}
