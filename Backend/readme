@@ -1,0 +1,58 @@
+to set up python env for this retrieval_api and database
+
+>>python -m venv venv
+to activate environment
+>>& D:/qwerty/.venv/Scripts/Activate.ps1
+
+UPGRADE pip
+>>python -m pip install --upgrade pip
+
+
+
+REQUIRED PACKAGES
+FastAPI + Uvicorn → for API
+
+ChromaDB + embeddings → vector DB
+
+SentenceTransformers → embeddings
+
+psycopg2 → PostgreSQL
+
+python-dotenv → for .env
+
+pypdf → PDF reading
+
+requests → optional, if Gemini needs it (usually in genai)
+
+google-genai → Gemini API client
+
+CMD IS
+>>pip install fastapi uvicorn chromadb sentence-transformers psycopg2-binary python-dotenv pypdf google-genai
+
+
+>>>  uvicorn retrieval_api:app --host 0.0.0.0 --port 9000
+this cmd is to run the retrieval_api
+
+ ENV files make sure to creat e.env files with given format
+create a .env file in the same directory as retrieval_api.py and db.py
+with the following content  
+GEMINI_API_KEY=your gemini api key
+CHROMA_DIR=./chroma_store
+CHROMA_COLLECTION=policy_docs
+GEMINI_MODEL=models/gemini-1.5-flash
+GEMINI_ENDPOINT=https://generativelanguage.googleapis.com/v1beta/models
+TOP_K=3
+MAX_PROMPT_CHARS=3000
+
+as for the .env file in the parent directory, it should contain
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=1234
+DB_DATABASE=policychat
+PORT=8000
+JWT_SECRET=your_secret_key
+
+
+when startting node backend ensure that you are using create environment
+>>& D:/qwerty/.venv/Scripts/Activate.ps1
+
