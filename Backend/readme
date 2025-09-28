@@ -33,6 +33,7 @@ CMD IS
 >>>  uvicorn retrieval_api:app --host 0.0.0.0 --port 9000
 this cmd is to run the retrieval_api
 
+ ENV files make sure to creat e.env files with given format
 create a .env file in the same directory as retrieval_api.py and db.py
 with the following content  
 GEMINI_API_KEY=your gemini api key
