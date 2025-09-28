@@ -9,7 +9,7 @@ export const Policy = sequelize.define("Policy", {
   premiumAmount: { type: DataTypes.FLOAT },
   premiumFrequency: { type: DataTypes.STRING },
   coverageAmount: { type: DataTypes.FLOAT },
-  status: { type: DataTypes.ENUM("active", "inactive"), defaultValue: "active" },
+  status: { type: DataTypes.ENUM("active", "expired"), defaultValue: "active" },
   startDate: { type: DataTypes.DATE },
   endDate: { type: DataTypes.DATE },
   notes: { type: DataTypes.TEXT },
