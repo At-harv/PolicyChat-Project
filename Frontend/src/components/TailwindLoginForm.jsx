@@ -14,10 +14,12 @@ const TailwindLoginForm = () => {
         email,
         password,
       });
+
       localStorage.setItem("token", res.token);
+      localStorage.setItem("username", res.user.name); // ✅ store username
+
       navigate("/dashboard");
     } catch (err) {
-      // Use a custom message box instead of alert()
       console.error(err.response?.data?.message || "Login failed");
       alert("Login failed. Please check your credentials.");
     }
@@ -76,7 +78,10 @@ const TailwindLoginForm = () => {
         </form>
 
         <div className="mt-4 text-center text-sm">
-          <a href="#" className="text-blue-600 hover:text-blue-700 font-semibold transition duration-150">
+          <a
+            href="#"
+            className="text-blue-600 hover:text-blue-700 font-semibold transition duration-150"
+          >
             Forgot password?
           </a>
         </div>

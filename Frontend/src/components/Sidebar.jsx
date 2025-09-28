@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import {
   Shield,
@@ -11,14 +11,20 @@ import {
 
 const Sidebar = () => {
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [username, setUsername] = useState("Your Account");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("username");
+    if (storedName) setUsername(storedName);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     navigate("/login");
   };
 
-  // Common className builder for active/inactive nav items
   const getNavClass = ({ isActive }) =>
     `flex items-center space-x-3 text-sm font-medium p-3 rounded-lg transition duration-150 ${
       isActive
@@ -60,26 +66,21 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* User Account / Logout */}
+      {/* User info / logout dropdown */}
       <div className="relative">
         <button
           onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-          className="flex items-center space-x-3 text-sm font-medium text-gray-500 w-full p-2 rounded-lg hover:bg-gray-100 transition duration-150"
+          className="flex items-center space-x-2 w-full p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150"
         >
-          <UserCircle size={20} />
-          <div className="flex flex-col text-left">
-            <span className="text-gray-800">Your Account</span>
-            <span className="text-xs text-gray-500">
-              Manage your policies securely
-            </span>
-          </div>
+          <UserCircle size={20} className="text-gray-500" />
+          <span>{username}</span>
         </button>
 
         {isAccountMenuOpen && (
           <div className="absolute bottom-full mb-2 w-full bg-white rounded-lg shadow-md overflow-hidden z-50">
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-3 text-sm text-red-600 p-3 w-full text-left hover:bg-red-100 transition duration-150"
+              className="flex items-center space-x-2 text-sm text-red-600 p-3 w-full text-left hover:bg-red-100 transition duration-150"
             >
               <LogOut size={20} />
               <span>Logout</span>

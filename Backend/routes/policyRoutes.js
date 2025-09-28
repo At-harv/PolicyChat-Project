@@ -1,26 +1,12 @@
-// import express from "express";
-// import { addPolicy, getPolicies, getDashboard, deletePolicy } from "../controllers/policyController.js";
-// import { protect } from "../middleware/authMiddleware.js";
-// import upload from "../middleware/multer.js";
-
-// const router = express.Router();
-
-// // Add Policy (with upload)
-// router.post("/", protect, upload.array("documents", 5), addPolicy);
-
-// // Get all policies
-// router.get("/", protect, getPolicies);
-
-// // Get dashboard stats
-// // router.get("/dashboard", protect, getDashboard);
-
-// // Delete policy
-// router.delete("/:id", protect, deletePolicy);
-
-// export default router;
 import express from "express";
 import multer from "multer";
-import { addPolicy, getPolicies, deletePolicy, getDashboard, getPolicyById } from "../controllers/policyController.js";
+import {
+  addPolicy,
+  getPolicies,
+  deletePolicy,
+  getDashboard,
+  getPolicyById,
+} from "../controllers/policyController.js";
 import { protect } from "../middleware/authMiddleware.js"; // your JWT auth
 
 const router = express.Router();
@@ -38,5 +24,5 @@ router.post("/", protect, upload.array("documents", 5), addPolicy); // max 5 fil
 router.get("/", protect, getPolicies);
 router.get("/dashboard", protect, getDashboard);
 router.delete("/:id", protect, deletePolicy);
-router.get("/:id",protect, getPolicyById);
+router.get("/:id", protect, getPolicyById);
 export default router;
