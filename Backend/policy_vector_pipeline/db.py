@@ -9,6 +9,26 @@ def get_connection():
         password="1234"
     )
 
+def fetch_policy_metadata(user_id):
+    """
+    Fetch policy metadata from SQL for a given user_id
+    Returns a list of dicts
+    """
+    conn = get_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("""
+        SELECT id, "policyName", "policyNumber", "insuranceCompany", "policyType",
+               "premiumAmount", "premiumFrequency", "coverageAmount", "status",
+               "startDate", "endDate", "userId", "createdAt", "updatedAt"
+        FROM "Policies"
+        WHERE "userId" = %s
+    """, (user_id,))
+    policies = cur.fetchall()
+    cur.close()
+    conn.close()
+    return policies
+
+
 def fetch_policies_by_id(policy_id):
     conn = get_connection()  # <-- define connection here
     cur = conn.cursor(cursor_factory=RealDictCursor)

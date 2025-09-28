@@ -1,46 +1,39 @@
 import os
-from pypdf import PdfReader
-import chromadb
-from chromadb.utils import embedding_functions
-from db import fetch_policies, fetch_policies_by_id
+import sys
 import json
 import csv
 from datetime import datetime
-import sys
-import os
+from pypdf import PdfReader
+import chromadb
+from chromadb.utils import embedding_functions
 from sentence_transformers import SentenceTransformer
+from db import fetch_policies, fetch_policies_by_id  # Your SQL fetch functions
 
-# Load the model
-sbert_model = SentenceTransformer("all-MiniLM-L6-v2")
-
+# -----------------------------
+# Configs
+# -----------------------------
 BACKEND_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-# Persistent Chroma (local directory)
+STATE_FILE = "last_ingested.txt"
+SPECIFIC_POLICY_ID = int(sys.argv[1]) if len(sys.argv) > 1 else None
+
+# -----------------------------
+# Chroma client & collection
+# -----------------------------
 client = chromadb.PersistentClient(path="./chroma_store")
-
-# Use Chroma's internal embedding model (SentenceTransformers)
 embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction("all-MiniLM-L6-v2")
-
 collection = client.get_or_create_collection(
     name="policy_docs",
     embedding_function=embedding_fn
 )
 
-# Keep track of last ingested policy ID
-STATE_FILE = "last_ingested.txt"
+# -----------------------------
+# SentenceTransformer model (optional, only for extra embeddings)
+# -----------------------------
+sbert_model = SentenceTransformer("all-MiniLM-L6-v2")
 
-
-
-
-# Optional: get a specific policy ID from command-line
-SPECIFIC_POLICY_ID = None
-if len(sys.argv) > 1:
-    try:
-        SPECIFIC_POLICY_ID = int(sys.argv[1])
-        print(f" Ingesting specific policy ID: {SPECIFIC_POLICY_ID}")
-    except ValueError:
-        print(" Invalid policy ID argument, ignoring.")
-
-
+# -----------------------------
+# State functions
+# -----------------------------
 def get_last_ingested():
     if os.path.exists(STATE_FILE):
         with open(STATE_FILE, "r") as f:
@@ -51,13 +44,15 @@ def set_last_ingested(policy_id):
     with open(STATE_FILE, "w") as f:
         f.write(str(policy_id))
 
+# -----------------------------
+# PDF helpers
+# -----------------------------
 def extract_text_from_pdf(pdf_path):
     try:
         reader = PdfReader(pdf_path)
-        text = "\n".join([page.extract_text() or "" for page in reader.pages])
-        return text
+        return "\n".join([page.extract_text() or "" for page in reader.pages])
     except Exception as e:
-        print(f" Failed to read {pdf_path}: {e}")
+        print(f"Failed to read {pdf_path}: {e}")
         return ""
 
 def chunk_text(text, chunk_size=800, overlap=100):
@@ -69,20 +64,45 @@ def chunk_text(text, chunk_size=800, overlap=100):
         start += chunk_size - overlap
     return chunks
 
-
-
+# -----------------------------
+# Ingest one policy
+# -----------------------------
 def ingest_policy(policy):
     policy_id = policy["id"]
     user_id = policy["userId"]
-    documents = policy["documents"]
 
+    # -------------------------
+    # 1) Ingest SQL metadata as a "document"
+    # -------------------------
+    metadata_doc = f"""
+Policy Name: {policy['policyName']}
+Policy Number: {policy['policyNumber']}
+Insurance Company: {policy['insuranceCompany']}
+Policy Type: {policy['policyType']}
+Premium Amount: {policy['premiumAmount']} ({policy['premiumFrequency']})
+Coverage Amount: {policy['coverageAmount']}
+Status: {policy['status']}
+Start Date: {policy['startDate']}
+End Date: {policy['endDate']}
+User ID: {policy['userId']}
+"""
+    collection.add(
+        ids=[f"policy_meta_{policy_id}"],
+        documents=[metadata_doc],
+        metadatas=[{"policy_id": policy_id, "user_id": user_id, "type": "metadata"}]
+    )
+    print(f"Ingested metadata for policy {policy_id}")
+
+    # -------------------------
+    # 2) Ingest PDF chunks
+    # -------------------------
+    documents = policy.get("documents", [])
     if not documents:
         return
 
     for doc_path in documents:
         doc_path = doc_path.lstrip("/")
         full_path = os.path.join(BACKEND_ROOT, doc_path)
-
         if not os.path.exists(full_path):
             print(f"Skipping missing file: {full_path}")
             continue
@@ -91,92 +111,14 @@ def ingest_policy(policy):
         chunks = chunk_text(text)
 
         ids = [f"{policy_id}_{i}" for i in range(len(chunks))]
-        metadatas = [
-            {"policy_id": policy_id, "user_id": user_id, "file": full_path, "chunk": i}
-            for i in range(len(chunks))
-        ]
-
-        # Add to Chroma
-        collection.add(ids=ids, documents=chunks, metadatas=metadatas)
-
-        # Compute embeddings using SentenceTransformer directly
-        embeddings = sbert_model.encode(chunks, show_progress_bar=False)
-
-        for i, emb in enumerate(embeddings):
-            print(f"--- Entry {i + 1} ---")
-            print(f"ID: {ids[i]}")
-            print(f"Document: {chunks[i][:200]}{'...' if len(chunks[i]) > 200 else ''}")
-            print(f"Metadata: {metadatas[i]}")
-            print(f"Embedding length: {len(emb)}\n")
-
-        print(f"Ingested {full_path} for policy {policy_id}")
-
-    policy_id = policy["id"]
-    user_id = policy["userId"]
-    documents = policy["documents"]
-
-    if not documents:
-        return
-
-    for doc_path in documents:
-        doc_path = doc_path.lstrip("/")
-        full_path = os.path.join(BACKEND_ROOT, doc_path)
-
-        if not os.path.exists(full_path):
-            print(f"Skipping missing file: {full_path}")
-            continue
-
-        text = extract_text_from_pdf(full_path)
-        chunks = chunk_text(text)
-
-        ids = [f"{policy_id}_{i}" for i in range(len(chunks))]
-        metadatas = [
-            {"policy_id": policy_id, "user_id": user_id, "file": full_path, "chunk": i}
-            for i in range(len(chunks))
-        ]
-
-        # Add to Chroma
-        collection.add(ids=ids, documents=chunks, metadatas=metadatas)
-
-        # Compute and display embeddings
-        embeddings = embedding_fn.get_embeddings(chunks)
-        for i, emb in enumerate(embeddings):
-            print(f"--- Entry {i + 1} ---")
-            print(f"ID: {ids[i]}")
-            print(f"Document: {chunks[i][:200]}{'...' if len(chunks[i]) > 200 else ''}")  # show first 200 chars
-            print(f"Metadata: {metadatas[i]}")
-            print(f"Embedding length: {len(emb)}\n")
-
-        print(f"Ingested {full_path} for policy {policy_id}")
-
-    policy_id = policy["id"]
-    user_id = policy["userId"]
-    documents = policy["documents"]
-
-    if not documents:
-        return
-
-    for doc_path in documents:
-        # Remove leading slash and make absolute path
-        doc_path = doc_path.lstrip("/")  
-        full_path = os.path.join(BACKEND_ROOT, doc_path)
-
-        if not os.path.exists(full_path):
-            print(f"Skipping missing file: {full_path}")
-            continue
-
-        text = extract_text_from_pdf(full_path)
-        chunks = chunk_text(text)
-
-        ids = [f"{policy_id}_{i}" for i in range(len(chunks))]
-        metadatas = [
-            {"policy_id": policy_id, "user_id": user_id, "file": full_path, "chunk": i}
-            for i in range(len(chunks))
-        ]
+        metadatas = [{"policy_id": policy_id, "user_id": user_id, "file": full_path, "chunk": i, "type": "pdf"} for i in range(len(chunks))]
 
         collection.add(ids=ids, documents=chunks, metadatas=metadatas)
-        print(f"Ingested {full_path} for policy {policy_id}")
+        print(f"Ingested {full_path} with {len(chunks)} chunks for policy {policy_id}")
 
+# -----------------------------
+# Main ingestion
+# -----------------------------
 def run_ingestion():
     if SPECIFIC_POLICY_ID:
         policies = fetch_policies_by_id(SPECIFIC_POLICY_ID)
@@ -192,13 +134,13 @@ def run_ingestion():
         ingest_policy(policy)
         set_last_ingested(policy["id"])
 
-
+# -----------------------------
+# Optional dumps
+# -----------------------------
 def dump_chroma_to_json(collection, output_dir="dumps"):
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_file = os.path.join(output_dir, f"chroma_dump_{timestamp}.json")
-
-    # Fetch all items (Chroma default limit is 100, so we need batching)
     all_items = {"ids": [], "documents": [], "metadatas": []}
     offset = 0
     batch_size = 100
@@ -214,17 +156,15 @@ def dump_chroma_to_json(collection, output_dir="dumps"):
 
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(all_items, f, ensure_ascii=False, indent=2)
-
-    print(f" Chroma collection dumped to {out_file}")
-
+    print(f"Chroma collection dumped to {out_file}")
 
 def dump_chroma_to_csv(collection, output_dir="dumps"):
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_file = os.path.join(output_dir, f"chroma_dump_{timestamp}.csv")
-
     offset = 0
     batch_size = 100
+
     with open(out_file, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["id", "document", "metadata"])
@@ -233,21 +173,20 @@ def dump_chroma_to_csv(collection, output_dir="dumps"):
             results = collection.get(include=["documents", "metadatas"], limit=batch_size, offset=offset)
             if not results["ids"]:
                 break
-
             for i in range(len(results["ids"])):
                 writer.writerow([
                     results["ids"][i],
                     results["documents"][i],
                     json.dumps(results["metadatas"][i])
                 ])
-
             offset += batch_size
 
-    print(f" Chroma collection dumped to {out_file}")
+    print(f"Chroma collection dumped to {out_file}")
 
-
+# -----------------------------
+# Run
+# -----------------------------
 if __name__ == "__main__":
     run_ingestion()
-    # After ingestion, create dumps
     dump_chroma_to_json(collection)
     dump_chroma_to_csv(collection)

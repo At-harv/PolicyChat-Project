@@ -1,4 +1,4 @@
-# retrieval_api.py
+# retrieval_api_updated.py
 import os
 from typing import Optional
 from fastapi import FastAPI, HTTPException
@@ -6,14 +6,13 @@ from pydantic import BaseModel
 import chromadb
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
-
 from google import genai
+from db import fetch_policy_metadata  # function to get SQL metadata for a policy
 
 # -------------------------
 # Load environment
 # -------------------------
 load_dotenv()
-
 print("GEMINI_API_KEY:", os.getenv("GEMINI_API_KEY"))
 
 # -------------------------
@@ -45,7 +44,6 @@ class QueryResponse(BaseModel):
 # -------------------------
 chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
 embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction("all-MiniLM-L6-v2")
-
 collection = chroma_client.get_or_create_collection(
     name=CHROMA_COLLECTION,
     embedding_function=embedding_fn
@@ -61,13 +59,18 @@ gemini_client = genai.Client()  # reads GEMINI_API_KEY from env
 # -------------------------
 def build_prompt(query: str, chunks: list):
     header = (
-        "You are an assistant that answers user questions about the user's insurance policies.\n"
-        "Use ONLY the context provided below. If the information is not present, say you don't know.\n\n"
+        # "You are an assistant that answers user questions about the user's insurance policies.\n"
+        # "Use ONLY the context provided below. If the information is not present, say you don't know.\n\n"
+        "You are an assistant that answers questions about user's insurance policies.\n"
+        "Use ONLY context provided below. If the information is not present, answer from general knowledge regarding policies.\n\n"
     )
     context_pieces = []
     total_chars = 0
     for idx, chunk in enumerate(chunks):
-        piece = f"[Source {idx+1}] File: {chunk['metadata'].get('file', 'unknown')} | Policy: {chunk['metadata'].get('policy_id')}\n{chunk['document']}\n---\n"
+        # Prioritize metadata documents
+        doc_type = chunk['metadata'].get('type', 'pdf')
+        source_label = f"Metadata" if doc_type == "metadata" else f"File: {chunk['metadata'].get('file', 'unknown')}"
+        piece = f"[Source {idx+1}] {source_label} | Policy: {chunk['metadata'].get('policy_id')}\n{chunk['document']}\n---\n"
         if total_chars + len(piece) > MAX_PROMPT_CHARS:
             break
         context_pieces.append(piece)
@@ -82,7 +85,7 @@ def call_gemini(prompt: str):
             model="gemini-2.5-flash",
             contents=prompt
         )
-        return {"text": response.text, "response_obj": response.dict()}  # convert to dict
+        return {"text": response.text, "response_obj": response.dict()}
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Gemini API call failed: {e}")
 
@@ -91,15 +94,38 @@ def call_gemini(prompt: str):
 # -------------------------
 @app.post("/query", response_model=QueryResponse)
 def query_endpoint(body: QueryRequest):
-    # 1) Validate request
     if not body.query or not body.user_id:
         raise HTTPException(status_code=400, detail="user_id and query are required")
 
-    # 2) Debug: check total docs
-    all_docs = collection.get(include=["documents", "metadatas"])
-    print(f"[DEBUG] Total documents in collection: {len(all_docs.get('documents', []))}")
+    # -------------------------
+    # 1) Fetch SQL metadata (if any)
+    # -------------------------
+    try:
+        metadata_docs = fetch_policy_metadata(body.user_id)
+        metadata_chunks = []
+        for meta in metadata_docs:
+            text_doc = (
+                f"Policy Name: {meta['policyName']}\n"
+                f"Policy Number: {meta['policyNumber']}\n"
+                f"Insurance Company: {meta['insuranceCompany']}\n"
+                f"Policy Type: {meta['policyType']}\n"
+                f"Premium: {meta['premiumAmount']} ({meta['premiumFrequency']})\n"
+                f"Coverage: {meta['coverageAmount']}\n"
+                f"Status: {meta['status']}\n"
+                f"Start Date: {meta['startDate']}\n"
+                f"End Date: {meta['endDate']}\n"
+            )
+            metadata_chunks.append({
+                "document": text_doc,
+                "metadata": {"policy_id": meta['id'], "user_id": body.user_id, "type": "metadata"}
+            })
+    except Exception as e:
+        print("[DEBUG] Failed to fetch SQL metadata:", e)
+        metadata_chunks = []
 
-    # 3) Semantic search in Chroma
+    # -------------------------
+    # 2) Semantic search in Chroma for PDF chunks
+    # -------------------------
     try:
         results = collection.query(
             query_texts=[body.query],
@@ -107,50 +133,46 @@ def query_endpoint(body: QueryRequest):
             where={"user_id": body.user_id},
             include=["documents", "metadatas", "distances"]
         )
-        print(f"[DEBUG] Raw Chroma results: {results}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Chroma query failed: {e}")
 
     docs_list = results.get("documents", [[]])[0]
     metas_list = results.get("metadatas", [[]])[0]
 
-    if not docs_list:
-        print("[DEBUG] No matching documents found")
-        return {
-            "answer": "No relevant documents found.",
-            "sources": [],
-            "raw_gemini_response": {}
-        }
+    pdf_chunks = [{"document": docs_list[i], "metadata": metas_list[i]} for i in range(len(docs_list))] if docs_list else []
 
-    # 4) Build chunks for prompt
-    docs = [{"document": docs_list[i], "metadata": metas_list[i]} for i in range(len(docs_list))]
-    for idx, doc in enumerate(docs):
-        print(f"[DEBUG] Retrieved: Policy={doc['metadata'].get('policy_id')}, Chunk={doc['metadata'].get('chunk')}")
+    # -------------------------
+    # 3) Combine metadata + PDF chunks
+    # -------------------------
+    combined_chunks = metadata_chunks + pdf_chunks
+    if not combined_chunks:
+        return {"answer": "No relevant documents found.", "sources": [], "raw_gemini_response": {}}
 
-    # 5) Build prompt for Gemini
-    prompt = build_prompt(body.query, docs)
-
-    # 6) Call Gemini
-# 6) Call Gemini with debug prints
+    # -------------------------
+    # 4) Build prompt & call Gemini
+    # -------------------------
+    prompt = build_prompt(body.query, combined_chunks)
     try:
         gemini_resp = call_gemini(prompt)
-        print("[DEBUG] Gemini response text:", gemini_resp.get("text") or str(gemini_resp))
     except Exception as e:
-        print("[DEBUG] Gemini call failed:", e)
         raise HTTPException(status_code=502, detail=f"Failed to call Gemini: {e}")
 
-    # 7) Prepare sources list
+    # -------------------------
+    # 5) Prepare sources list
+    # -------------------------
     sources = [
         {
             "source_index": idx + 1,
-            "policy_id": doc["metadata"].get("policy_id"),
-            "file": doc["metadata"].get("file"),
-            "chunk": doc["metadata"].get("chunk")
+            "policy_id": chunk["metadata"].get("policy_id"),
+            "file": chunk["metadata"].get("file"),
+            "type": chunk["metadata"].get("type")
         }
-        for idx, doc in enumerate(docs[:body.top_k])
+        for idx, chunk in enumerate(combined_chunks[:body.top_k])
     ]
 
-    # 8) Return response
+    # -------------------------
+    # 6) Return response
+    # -------------------------
     return {
         "answer": gemini_resp["text"].strip(),
         "sources": sources,
